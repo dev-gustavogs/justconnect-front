@@ -85,7 +85,6 @@ export function PostCard({
               fontSize={'16px'}
               bg="transparent"
               color={'#000000'}
-              fontFamily="montserrat"
               fontWeight={'500'}
             >
               {title}
@@ -138,11 +137,11 @@ export function PostCard({
             ))}
           </Flex>
           <Flex direction="column" alignItems="flex-end">
-            <Text fontSize="12px" fontFamily="montserrat" color={'#515151'}>
+            <Text fontSize="12px" color={'#515151'}>
               {dateText}
             </Text>
             <Link to={'/profile/:id'}>
-              <Text fontSize="12px" fontFamily="montserrat" color="purple">
+              <Text fontSize="12px" color="purple">
                 @username
               </Text>
             </Link>
