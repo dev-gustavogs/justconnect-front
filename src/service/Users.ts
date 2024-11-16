@@ -1,12 +1,11 @@
-import { UUID } from 'crypto';
 import { User, UserResponse } from '../interface/UserInterface';
 import api from './api';
 
-const fetchUserData = async (id?: UUID | string): Promise<User> => {
-  if (!id) {
-    throw new Error('ID não foi encontrado');
+const fetchUserData = async (username?: string): Promise<User> => {
+  if (!username) {
+    throw new Error('username não foi encontrado');
   }
-  const response = await api.get<User>(`/public/users/${id}`);
+  const response = await api.get<User>(`/public/users/user/${username}`);
 
   return response.data;
 };

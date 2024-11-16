@@ -16,8 +16,11 @@ const forgotPassword = async (data: UserForgotPassword) => {
   return response;
 };
 const resetPassword = async (data: UserResetPassword) => {
-  const response = await api.post(`public/auth/reset-password`, data);
+  const response = await api.post(`public/auth/reset-password`, data, {
+    headers: {
+      Authorization: `Bearer ${data.token}`,
+    },
+  });
   return response;
 };
-
 export { signUp, signIn, forgotPassword,resetPassword };

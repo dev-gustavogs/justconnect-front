@@ -14,7 +14,6 @@ import { fetchPosts } from '../../service/Post';
 
 export function HomePage() {
   //ajustar cores das tabs
-  //função de listagem de posts
 
   const [posts, setPosts] = useState<UserPostInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -57,12 +56,14 @@ export function HomePage() {
             <TabPanel>
               {loading && <p>carregando...</p>}
 
-              {posts.length > 0 &&
-                posts.map((post) => (
-                  <Flex direction="column" gap="15px" key={post.id}>
-                    <PostCard post={post} />
-                  </Flex>
-                ))}
+              <Flex direction="column" gap="15px">
+                {posts.length > 0 &&
+                  posts.map((post) => (
+                    <Box borderBottom="1px solid #B6B4BB" paddingBottom="10px">
+                      <PostCard post={post} />
+                    </Box>
+                  ))}
+              </Flex>
 
               {!loading && posts.length === 0 && <p>Nenhum post encontrado</p>}
             </TabPanel>

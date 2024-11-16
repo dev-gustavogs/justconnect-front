@@ -4,26 +4,26 @@ import { User, UserPostInfo } from '../../interface/UserInterface';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchUserData } from '../../service/Users';
-import { UUID } from 'crypto';
+import { PostCard } from '../../components/PostCard/PostCard';
 
 export function ProfilePage() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>();
-  const [posts, setPosts] = useState<
-    Omit<UserPostInfo, 'user_id' | 'updatedAt'>[] | undefined
-  >([]);
+  const [posts, setPosts] = useState<UserPostInfo[]>([]);
   const url = useParams();
-  const id = url.id;
+  const username = url.username;
 
-  const getUser = async (id?: UUID | string) => {
-    if (!id) {
+  const getUser = async (username?: string) => {
+    if (!username) {
       return;
     }
     setLoading(true);
     try {
-      const response = await fetchUserData(id);
+      const response = await fetchUserData(username);
       setUser(response);
-      setPosts(response.posts);
+      if (response.posts) {
+        setPosts(response.posts.reverse());
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -32,8 +32,8 @@ export function ProfilePage() {
   };
 
   useEffect(() => {
-    getUser(id);
-  }, [url, id]);
+    getUser(username);
+  }, [url, username]);
 
   if (!user) {
     return;
@@ -51,9 +51,8 @@ export function ProfilePage() {
             {posts && posts.length > 0 ? (
               posts.map((p) => {
                 return (
-                  <Box>
-                    <Text>{p.title}</Text>
-                    <Text>{p.description}</Text>
+                  <Box borderBottom="1px solid #DEDEDE">
+                    <PostCard post={p} />
                   </Box>
                 );
               })

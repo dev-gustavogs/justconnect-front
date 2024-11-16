@@ -164,11 +164,11 @@ export function CreatePostPage() {
             <Box margin="10px 20px" color="gray.500" fontSize="14px">
               <ul>
                 <li>
-                  <Text>Para criar uma tag precione Enter</Text>
+                  <Text>Para criar uma tag pressione Enter</Text>
                 </li>
                 <li>
                   <Text>
-                    Para tags com mais de uma palavra, separe-as com um -
+                    Para tags com mais de uma palavra, separe-as com um hífen
                   </Text>
                   <Text>ex: back-end</Text>
                 </li>

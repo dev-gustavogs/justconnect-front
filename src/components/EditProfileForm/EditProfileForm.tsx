@@ -13,6 +13,7 @@ import {
   Text,
   useToast,
   Textarea,
+  InputGroup,
 } from '@chakra-ui/react';
 import { useProfileStore } from '../../store/profileStore';
 import { useAuthStore } from '../../store/authStore';
@@ -26,6 +27,7 @@ export function EditProfileForm({ user }: Props) {
   const [username, setUsername] = useState<string>(user.username);
   const [email, setEmail] = useState<string>(user.email);
   const [bio, setBio] = useState<string | undefined>(user.bio_description);
+
   const [insta, setInsta] = useState<string | undefined>(user.instagram);
   const [linkedin, setLinkedin] = useState<string | undefined>(user.linkedin);
   const [github, setGithub] = useState<string | undefined>(user.github);
@@ -43,12 +45,14 @@ export function EditProfileForm({ user }: Props) {
     email: email,
     bio_description: bio,
     instagram: insta || null,
-    linkedin: linkedin || null,
     github: github || null,
+    linkedin: linkedin || null,
   };
+
   if (!id) {
     return;
   }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -149,9 +153,11 @@ export function EditProfileForm({ user }: Props) {
             required
           />
         </FormControl>
-        <FormControl mb="4">
-          <FormLabel htmlFor="insta">Instagram</FormLabel>
+        <FormLabel htmlFor="instagram">Instagram link</FormLabel>
+        <InputGroup mb="4">
           <Input
+            name="instagram"
+            placeholder="http://instagram.com/"
             bg="#fff"
             border="2px solid"
             borderColor="#805AD5"
@@ -165,10 +171,12 @@ export function EditProfileForm({ user }: Props) {
             onChange={(e) => setInsta(e.target.value)}
             isDisabled={loading}
           />
-        </FormControl>
-        <FormControl mb="4">
-          <FormLabel htmlFor="linkedin">LinkedIn</FormLabel>
+        </InputGroup>
+        <FormLabel htmlFor="linkedin">LinkedIn link</FormLabel>
+        <InputGroup mb="4">
           <Input
+            name="linkedin"
+            placeholder="http://linkedin.com/"
             bg="#fff"
             border="2px solid"
             borderColor="#805AD5"
@@ -182,10 +190,12 @@ export function EditProfileForm({ user }: Props) {
             onChange={(e) => setLinkedin(e.target.value)}
             isDisabled={loading}
           />
-        </FormControl>
-        <FormControl mb="4">
-          <FormLabel htmlFor="github">GitHub</FormLabel>
+        </InputGroup>
+        <FormLabel htmlFor="github">GitHub link</FormLabel>
+        <InputGroup mb="4">
           <Input
+            name="github"
+            placeholder="http://github.com/"
             bg="#fff"
             border="2px solid"
             borderColor="#805AD5"
@@ -199,7 +209,7 @@ export function EditProfileForm({ user }: Props) {
             onChange={(e) => setGithub(e.target.value)}
             isDisabled={loading}
           />
-        </FormControl>
+        </InputGroup>
 
         {error && (
           <Text color="red.500" mb="4">

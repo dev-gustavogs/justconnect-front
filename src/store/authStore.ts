@@ -6,7 +6,7 @@ import { useProfileStore } from './profileStore';
 import { usePostStore } from './postStore';
 
 const { getProfile, resetUser } = useProfileStore.getState();
-const { resetPosts } = usePostStore.getState();
+const { resetPosts, setPosts } = usePostStore.getState();
 
 export interface AuthState {
   token?: string;
@@ -31,6 +31,7 @@ const storeApi: StateCreator<AuthState> = (set) => ({
       const { token, id } = user.data;
       set({ token, id });
       getProfile();
+      setPosts(id);
     } catch (error) {
       if (error instanceof Error) {
         console.error('Erro ao fazer login:', error.message);

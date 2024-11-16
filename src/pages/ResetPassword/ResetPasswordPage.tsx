@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { resetPassword } from '../../service/Auth';
 import logoAuth from '../../assets/logoAuth.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export function ResetPasswordPage() {
   const [newPassword, setNewPassword] = useState<string>('');
@@ -23,12 +23,26 @@ export function ResetPasswordPage() {
   const isDesktop = useBreakpointValue({ base: false, md: true });
   const toast = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const getTokenFromUrl = (): string | null => {
+    const params = new URLSearchParams(location.search);
+    return params.get('token');
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
-   
+
+    const token = getTokenFromUrl();
+
+    if (!token) {
+      setError('Token de autenticação ausente.');
+      setLoading(false);
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       setError('As senhas não coincidem');
       setLoading(false);
@@ -36,10 +50,10 @@ export function ResetPasswordPage() {
     }
 
     try {
-      await resetPassword({ newPassword});
+      await resetPassword({ newPassword, token });
       toast({
         title: 'Senha alterada com sucesso',
-        description: `Sua senha foi alterada com sucesso! Você já pode acessar sua conta.`,
+        description: `Sua senha foi alterada com sucesso!! Você já pode acessar sua conta.`,
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -65,7 +79,6 @@ export function ResetPasswordPage() {
       height="100vh"
       padding="16px"
     >
-      
       <Box width="476px">
         <Image
           src={logoAuth}

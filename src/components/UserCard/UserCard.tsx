@@ -1,14 +1,13 @@
 import { Box, Avatar, Heading, Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { UserCardData } from '../../interface/UserInterface';
-import { UUID } from 'crypto';
 
 export function UserCard({ name, username, postCount, id }: UserCardData) {
   const navigate = useNavigate();
 
-  function handleOpenProfile(id: UUID | undefined): void {
+  function handleOpenProfile(username?: string): void {
     try {
-      navigate(`/profile/${id}`);
+      navigate(`/profile/${username}`);
     } catch {
       throw new Error('Perfil de usuário não encontrado.');
     }
@@ -16,7 +15,8 @@ export function UserCard({ name, username, postCount, id }: UserCardData) {
 
   return (
     <Flex
-      onClick={() => handleOpenProfile(id)}
+      id={id}
+      onClick={() => handleOpenProfile(username)}
       padding="20px"
       gap="30px"
       align="center"

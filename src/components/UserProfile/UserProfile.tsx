@@ -31,7 +31,7 @@ export function UserProfile({
         <Flex direction="column" gap="13px">
           <Box>
             <Heading size="lg">{name}</Heading>
-            <Text color="#805AD5;">{username}</Text>
+            <Text color="#805AD5;">@{username}</Text>
           </Box>
           <Text>{bio_description}</Text>
           <Flex gap="45px">
