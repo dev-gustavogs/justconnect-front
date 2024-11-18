@@ -70,8 +70,6 @@ export function PostCard({
             <Text
               fontSize={'16px'}
               bg="transparent"
-              color={'#000000'}
-              fontFamily="montserrat"
               fontWeight={'500'}
               _hover={{ color: '#805AD5' }}
             >
@@ -104,12 +102,15 @@ export function PostCard({
             )}
           </Flex>
           <Flex direction="column" alignItems="flex-end">
-            <Text fontSize="12px" fontFamily="montserrat" color={'#515151'}>
-              {dateText}
-            </Text>
-            <Link to={'/profile/:id'}>
-              <Text fontSize="12px" fontFamily="montserrat" color="purple">
-                @username
+            <DataText created={created_at} updated={updated_at} sufix={true} />
+            <Link to={`/profile/${username}`}>
+              <Text
+                fontSize="12px"
+                fontFamily="montserrat"
+                color="#805AD5"
+                _hover={{ color: '#281A45' }}
+              >
+                @{username}
               </Text>
             </Link>
           </Flex>
