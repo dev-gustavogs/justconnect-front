@@ -5,23 +5,33 @@ import {
   useBreakpointValue,
   Link,
   Avatar,
-  InputGroup,
-  InputLeftElement,
-  Input,
   AvatarBadge,
   Image,
 } from '@chakra-ui/react';
-import { FiBell, FiMenu, FiSearch } from 'react-icons/fi';
+import { FiMenu } from 'react-icons/fi';
 import logoBot from '../../assets/logoBot.svg';
-import {SidebarHeaderProps } from '../../interface/SideBarInterface';
+import { SidebarHeaderProps } from '../../interface/SideBarInterface';
+import { NotificationsWrapper } from '../Notifications/NotificationsWrapper';
+import { useState } from 'react';
+import { SearchBar } from '../Search/SearchBar';
 
-const SidebarHeader = ({
-  onOpen,
-  toggleSearch,
-  showSearchInput,
-  user,
-}: SidebarHeaderProps) => {
+const SidebarHeader = ({ onOpen, user }: SidebarHeaderProps) => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
+  const [searchVisible, setSearchVisible] = useState(false);
+  const [notificationsVisible, setNotificationsVisible] = useState(false);
+
+  const toggleSearch = () => {
+    if (notificationsVisible) {
+      setNotificationsVisible(false);
+    }
+    setSearchVisible(!searchVisible);
+  };
+  const toggleNotifications = () => {
+    if (searchVisible) {
+      setSearchVisible(false);
+    }
+    setNotificationsVisible(!notificationsVisible);
+  };
 
   return (
     <Flex
@@ -56,40 +66,12 @@ const SidebarHeader = ({
         />
       </Flex>
       <Flex alignItems="center">
-        {showSearchInput ? (
-          <InputGroup mr={4}>
-            <InputLeftElement children={<FiSearch color="#000" />} />
-            <Input
-              w={{ base: '100%', md: '400px' }}
-              bg="white"
-              borderRadius={6}
-              focusBorderColor="#fff"
-              placeholder="Buscar"
-              _placeholder={{ color: '#A0AEC0' }}
-            />
-          </InputGroup>
-        ) : (
-          <IconButton
-            variant="outline"
-            bg="none"
-            border="none"
-            aria-label="search"
-            icon={<FiSearch color="#fff" size={24} />}
-            onClick={toggleSearch}
-            _hover={{ color: '#fff', bg: '#805AD5' }}
-            marginRight="4"
-          />
-        )}
+        <SearchBar searchVisible={searchVisible} toggleSearch={toggleSearch} />
         {user ? (
           <>
-            <IconButton
-              variant="outline"
-              bg="none"
-              border="none"
-              aria-label="notifications"
-              icon={<FiBell color="#fff" size={24} />}
-              _hover={{ color: '#fff', bg: '#805AD5' }}
-              marginRight="4"
+            <NotificationsWrapper
+              notificationsVisible={notificationsVisible}
+              toggleNotifications={toggleNotifications}
             />
             <Avatar name={user.name} color="#fff" marginRight="4">
               <AvatarBadge bg="green.500" boxSize="1.25em" />
